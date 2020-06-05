@@ -2,15 +2,19 @@ import React, { FunctionComponent, useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import SinglePost from "./single-post";
-import { RootState } from "../store/reducers/blog-reducer";
-import { StyledSpinner } from "./shared/components";
-import { getAllPosts } from "../store/actions/projects-actions";
-import { State } from "../store/store";
+import { RootState } from "../../store/reducers/blog-reducer";
+import { StyledSpinner } from "../shared/components";
+import { getAllPosts } from "../../store/actions/projects-actions";
+import { State } from "../../store/store";
 
 export const StyledPosts = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: unset;
+  @media (max-width: 768px) {
+    margin: 0 2px;
+  }
 `;
 
 interface OwnProps {

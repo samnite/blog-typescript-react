@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from "react";
-import Posts from "./posts";
-import PostInput from "./post-input";
+import Posts from "../posts/posts";
+import PostInput from "../posts/post-input";
 
 interface OwnProps {}
 
 type Props = OwnProps;
 
-const home: FunctionComponent<Props> = props => {
+const home: FunctionComponent<Props> = () => {
   return (
     <>
       <PostInput />

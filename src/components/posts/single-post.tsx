@@ -2,13 +2,14 @@ import React, { FunctionComponent } from "react";
 import { Card, Button } from "antd";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Post } from "../store/reducers/blog-reducer";
-import EditButtons from "./edit-buttons";
+import { Post } from "../../store/reducers/blog-reducer";
+import EditButtons from "../util/edit-buttons";
 import PostUpdate from "./post-update";
 
 export const StyledCard = styled(Card)`
   margin-bottom: 5px;
   border-radius: 5px;
+  width: 600px;
   textarea {
     margin-top: 5px;
   }
@@ -17,6 +18,9 @@ export const StyledCard = styled(Card)`
   }
   span {
     cursor: pointer;
+  }
+  @media (max-width: 768px) {
+    width: 99%;
   }
 `;
 
@@ -45,7 +49,6 @@ const SinglePost: FunctionComponent<Props> = ({ post, showButton = true }) => {
             )
           }
           bordered={false}
-          style={{ width: 600 }}
         >
           <p>{post.body}</p>
           <Link to={`post/${post.id}`}>

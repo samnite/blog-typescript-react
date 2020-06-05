@@ -1,22 +1,11 @@
 import React, { FunctionComponent } from "react";
 import { Switch, Route } from "react-router-dom";
-import { connect } from "react-redux";
 import { StyledContainer } from "./components/shared/components";
-import {
-  getAllPosts,
-  getSinglePost,
-  addPost
-} from "./store/actions/projects-actions";
-import NotFound from "./components/not-found";
-import Home from "./components/home";
-import { Post } from "./store/reducers/blog-reducer";
-import PostPage from "./components/post-page";
+import NotFound from "./components/pages/not-found";
+import Home from "./components/pages/home";
+import PostPage from "./components/pages/post-page";
 
-interface OwnProps {
-  getAllPosts: () => void;
-  getSinglePost: (id: number) => void;
-  addPost: (post: Post) => void;
-}
+interface OwnProps {}
 
 type Props = OwnProps;
 
@@ -32,7 +21,4 @@ const App: FunctionComponent<Props> = () => {
   );
 };
 
-export default connect(
-  null,
-  { getAllPosts, getSinglePost, addPost }
-)(App);
+export default App;

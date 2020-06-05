@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useState } from "react";
 import { Input, Button } from "antd";
 import { connect } from "react-redux";
-import { StyledInput } from "./post-input";
-import { createComment } from "../store/actions/projects-actions";
-import { Comment } from "../store/reducers/blog-reducer";
+import { StyledInput } from "../posts/post-input";
+import { createComment } from "../../store/actions/projects-actions";
+import { Comment } from "../../store/reducers/blog-reducer";
 
 type Event = { target: { value: string } };
 
@@ -17,7 +17,10 @@ type Props = OwnProps;
 const CommentInput: FunctionComponent<Props> = ({ id, createComment }) => {
   const [body, setBody] = useState("");
   const onAddComment = () => {
-    if (id) createComment({ postId: id, body });
+    if (id) {
+      createComment({ postId: id, body });
+      setBody("");
+    }
   };
   return (
     <StyledInput>

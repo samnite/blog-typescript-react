@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { deletePost, setEditMode } from "../store/actions/projects-actions";
+import { deletePost, setEditMode } from "../../store/actions/projects-actions";
 
 const StyledButtons = styled.div`
   display: flex;

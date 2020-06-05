@@ -2,9 +2,9 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { Button, Input } from "antd";
 import { connect } from "react-redux";
 import { CloseOutlined } from "@ant-design/icons";
-import { Post } from "../store/reducers/blog-reducer";
+import { Post } from "../../store/reducers/blog-reducer";
 import { StyledCard } from "./single-post";
-import { updatePost, setEditMode } from "../store/actions/projects-actions";
+import { updatePost, setEditMode } from "../../store/actions/projects-actions";
 
 const { TextArea } = Input;
 
@@ -13,7 +13,6 @@ type Event = { target: { value: string } };
 interface OwnProps {
   updatePost: (post: Post) => void;
   setEditMode: (id: number, mode: boolean) => void;
-
   post: Post;
 }
 

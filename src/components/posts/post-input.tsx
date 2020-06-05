@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { Input, Button } from "antd";
 import { connect } from "react-redux";
 import { StyledPosts } from "./posts";
-import { addPost } from "../store/actions/projects-actions";
-import { Post } from "../store/reducers/blog-reducer";
+import { addPost } from "../../store/actions/projects-actions";
+import { Post } from "../../store/reducers/blog-reducer";
 
 const { TextArea } = Input;
 
@@ -22,6 +22,10 @@ export const StyledInput = styled(StyledPosts)`
   p {
     font-weight: bold;
     margin-bottom: 5px;
+  }
+  @media (max-width: 768px) {
+    width: 75%;
+    margin: 0 auto;
   }
 `;
 
