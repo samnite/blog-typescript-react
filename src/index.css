@@ -1,0 +1,17 @@
+@import '~antd/dist/antd.css';
+
+:root {
+    --primary-color: #678d3b !important;
+    --primary-hover-color: #93cb52 !important;
+    --dark-color: #333 !important;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: lightgray;
+}

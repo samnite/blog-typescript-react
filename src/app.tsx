@@ -6,10 +6,12 @@ import {
   getSinglePost,
   addPost
 } from "./store/actions/projects-actions";
-import Posts from "./components/posts";
 import SinglePost from "./components/single-post";
 import NotFound from "./components/not-found";
+import Home from "./components/home";
 import { Post } from "./store/reducers/blog-reducer";
+import PostPage from "./components/post-page";
+import styled from "styled-components";
 
 interface OwnProps {
   getAllPosts: () => void;
@@ -18,6 +20,13 @@ interface OwnProps {
 }
 
 type Props = OwnProps;
+
+const StyledContainer = styled.div`
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 2rem;
+  overflow: hidden;
+`;
 
 const App: FunctionComponent<Props> = ({
   getAllPosts,
@@ -28,13 +37,13 @@ const App: FunctionComponent<Props> = ({
     // eslint-disable-next-line
   }, []);
   return (
-    <>
+    <StyledContainer>
       <Switch>
-        <Route exact path="/" component={Posts} />
-        <Route path="/post/:id" component={SinglePost} />
+        <Route exact path="/" component={Home} />
+        <Route path="/post/:id" component={PostPage} />
         <Route component={NotFound} />
       </Switch>
-    </>
+    </StyledContainer>
   );
 };
 

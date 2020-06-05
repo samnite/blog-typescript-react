@@ -27,7 +27,7 @@ export const getSinglePost = (id: number) => (
   dispatch: (dispatched: DispatchPost) => void
 ) => {
   axios
-    .get(`/posts/${id}`)
+    .get(`/posts/${id}?_embed=comments`)
     .then(res => {
       console.log(res.data);
       dispatch({
@@ -58,6 +58,21 @@ export const updatePost = (post: Post) => (
   axios({
     method: "put",
     url: `/posts/${post.id}`,
+    data: post
+  })
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => console.log(err.message));
+};
+
+// Create Comment
+export const createComment = (post: Post) => (
+  dispatch: (dispatched: DispatchPost) => void
+) => {
+  axios({
+    method: "post",
+    url: `/comments/`,
     data: post
   })
     .then(res => {

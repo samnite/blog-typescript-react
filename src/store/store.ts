@@ -3,12 +3,16 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunkMiddleware from "redux-thunk";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import { createBrowserHistory } from "history";
-import blogReducer from "./reducers/blog-reducer";
+import blogReducer, { RootState } from "./reducers/blog-reducer";
 
 let mStore: Store;
 
 const initialState = {};
 const history = createBrowserHistory();
+
+export interface State {
+  data: RootState;
+}
 
 const rootReducer = combineReducers({
   router: connectRouter(history),

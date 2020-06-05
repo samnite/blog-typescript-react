@@ -1,14 +1,19 @@
 import { GET_ALL_POSTS, GET_SINGLE_POST } from "../types";
 import { createReducer } from "../redux";
 
+export interface Comment {
+  postId: number;
+  body: string;
+  id?: number;
+}
 export interface Post {
   id?: number;
   title: string;
   body: string;
-  comments?: string[];
+  comments?: Comment[];
 }
 export interface RootState {
-  posts: Post[];
+  posts: Post[] | null;
   post: Post;
 }
 

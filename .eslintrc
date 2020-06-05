@@ -1,6 +1,7 @@
 {
   "extends": "airbnb-typescript-prettier",
   "rules": {
+    "prefer-destructuring": "off",
     "no-console": "off",
     "no-shadow": "off",
     "@typescript-eslint/no-unused-vars": "off", // TODO remove on prod
