@@ -2,11 +2,7 @@ import React, { FunctionComponent } from "react";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import {
-  deletePost,
-  getAllPosts,
-  setLoading
-} from "../store/actions/projects-actions";
+import { deletePost } from "../store/actions/projects-actions";
 
 const StyledButtons = styled.div`
   display: flex;
@@ -18,24 +14,15 @@ const StyledButtons = styled.div`
 
 interface OwnProps {
   deletePost: (id: number) => void;
-  getAllPosts: () => void;
-  setLoading: () => void;
   postId: number | null;
 }
 
 type Props = OwnProps;
 
-const EditButtons: FunctionComponent<Props> = ({
-  deletePost,
-  postId,
-  getAllPosts,
-  setLoading
-}) => {
+const EditButtons: FunctionComponent<Props> = ({ deletePost, postId }) => {
   const onDeletePost = () => {
     if (postId) {
-      setLoading();
       deletePost(postId);
-      // getAllPosts();
     }
   };
   return (
@@ -48,5 +35,5 @@ const EditButtons: FunctionComponent<Props> = ({
 
 export default connect(
   null,
-  { deletePost, getAllPosts, setLoading }
+  { deletePost }
 )(EditButtons);

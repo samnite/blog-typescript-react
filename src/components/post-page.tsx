@@ -7,6 +7,7 @@ import { getSinglePost } from "../store/actions/projects-actions";
 import { State } from "../store/store";
 import { Comment, RootState } from "../store/reducers/blog-reducer";
 import { StyledPosts } from "./posts";
+import CommentInput from "./comment-input";
 
 interface OwnProps {
   getSinglePost: (id: number) => void;
@@ -31,6 +32,7 @@ const PostPage: FunctionComponent<Props> = ({
   return (
     <StyledPosts>
       <SinglePost post={post} showButton={false} />
+      <CommentInput id={post.id} />
       <Card title="Comments" bordered={false} style={{ width: 500 }}>
         {comments && comments.length > 0
           ? comments.map((comment: Comment) => {

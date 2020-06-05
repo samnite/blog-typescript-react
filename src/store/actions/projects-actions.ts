@@ -5,7 +5,7 @@ import { State } from "../store";
 
 axios.defaults.baseURL = "https://bloggy-api.herokuapp.com/";
 
-type DispatchPost = { type: string; payload?: Post };
+type DispatchPost = { type: string; payload?: Post | Post[] };
 
 // Get All Posts from server
 export const getAllPosts = () => (
@@ -17,7 +17,7 @@ export const getAllPosts = () => (
       console.log(res);
       dispatch({
         type: GET_ALL_POSTS,
-        payload: res.data
+        payload: res.data.reverse()
       });
     })
     .catch(err => console.log(err.message));
@@ -40,28 +40,41 @@ export const getSinglePost = (id: number) => (
 };
 
 // Add Post on server
-export const addPost = (post: Post) => (dispatch: never) => {
+export const addPost = (post: Post) => (
+  dispatch: (dispatched: DispatchPost) => void,
+  getState: () => State
+) => {
   axios({
     method: "post",
     url: "/posts/",
     data: post
   })
     .then(res => {
-      console.log(res.data);
+      // update local posts
+      const posts = [...getState().data.posts];
+      posts.unshift(res.data);
+      dispatch({
+        type: GET_ALL_POSTS,
+        payload: posts
+      });
     })
     .catch(err => console.log(err.message));
 };
 
 // Delete Post from server
 export const deletePost = (id: number) => (
-  dispatch: never,
+  dispatch: (dispatched: DispatchPost) => void,
   getState: () => State
 ) => {
-  const state = { ...getState() };
   axios
     .delete(`/posts/${id}`)
     .then(res => {
-      console.log(res.data);
+      // Update local posts
+      const posts = [...getState().data.posts].filter(post => post.id !== id);
+      dispatch({
+        type: GET_ALL_POSTS,
+        payload: posts
+      });
     })
     .catch(err => console.log(err.message));
 };
@@ -81,25 +94,26 @@ export const updatePost = (post: Post) => (
     .catch(err => console.log(err.message));
 };
 
-// Create Comment
-export const createComment = (post: Post) => (
-  dispatch: (dispatched: DispatchPost) => void
+// Add Comment to post
+export const createComment = (comment: Comment) => (
+  dispatch: (dispatched: DispatchPost) => void,
+  getState: () => State
 ) => {
   axios({
     method: "post",
     url: `/comments/`,
-    data: post
+    data: comment
   })
     .then(res => {
-      console.log(res.data);
+      // Update local comments of post
+      const post = { ...getState().data.post };
+      if (post.comments) {
+        post.comments.push(res.data);
+        dispatch({
+          type: GET_SINGLE_POST,
+          payload: post
+        });
+      }
     })
     .catch(err => console.log(err.message));
-};
-
-export const setLoading = () => (
-  dispatch: (dispatched: DispatchPost) => void
-) => {
-  dispatch({
-    type: SET_LOADING
-  });
 };
