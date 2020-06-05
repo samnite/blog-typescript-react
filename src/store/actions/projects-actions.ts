@@ -1,15 +1,15 @@
 import axios from "axios";
-import { GET_ALL_POSTS, GET_SINGLE_POST } from "../types";
-import { Post } from "../reducers/blog-reducer";
+import { SET_ALL_POSTS, GET_SINGLE_POST } from "../types";
+import { Comment, Post } from "../reducers/blog-reducer";
 import { State } from "../store";
 
 axios.defaults.baseURL = "https://bloggy-api.herokuapp.com/";
 
-type DispatchPost = { type: string; payload?: Post | Post[] | boolean };
+export type ActionType = { type: string; payload?: Post | Post[] | boolean };
 
 // Get All Posts from server
 export const getAllPosts = () => (
-  dispatch: (dispatched: DispatchPost) => void
+  dispatch: (dispatched: ActionType) => void
 ) => {
   axios
     .get("/posts")
@@ -19,7 +19,7 @@ export const getAllPosts = () => (
         editMode: false // Needed to edit posts
       }));
       dispatch({
-        type: GET_ALL_POSTS,
+        type: SET_ALL_POSTS,
         payload: posts.reverse()
       });
     })
@@ -28,7 +28,7 @@ export const getAllPosts = () => (
 
 // Get Single Post from server
 export const getSinglePost = (id: number) => (
-  dispatch: (dispatched: DispatchPost) => void
+  dispatch: (dispatched: ActionType) => void
 ) => {
   axios
     .get(`/posts/${id}?_embed=comments`)
@@ -43,7 +43,7 @@ export const getSinglePost = (id: number) => (
 
 // Add Post on server
 export const addPost = (post: Post) => (
-  dispatch: (dispatched: DispatchPost) => void,
+  dispatch: (dispatched: ActionType) => void,
   getState: () => State
 ) => {
   axios({
@@ -56,7 +56,7 @@ export const addPost = (post: Post) => (
       const posts = [...getState().data.posts];
       posts.unshift(res.data);
       dispatch({
-        type: GET_ALL_POSTS,
+        type: SET_ALL_POSTS,
         payload: posts
       });
     })
@@ -65,16 +65,16 @@ export const addPost = (post: Post) => (
 
 // Delete Post from server
 export const deletePost = (id: number) => (
-  dispatch: (dispatched: DispatchPost) => void,
+  dispatch: (dispatched: ActionType) => void,
   getState: () => State
 ) => {
   axios
     .delete(`/posts/${id}`)
-    .then(res => {
+    .then(() => {
       // Update local posts
       const posts = [...getState().data.posts].filter(post => post.id !== id);
       dispatch({
-        type: GET_ALL_POSTS,
+        type: SET_ALL_POSTS,
         payload: posts
       });
     })
@@ -83,7 +83,7 @@ export const deletePost = (id: number) => (
 
 // Update post on server
 export const updatePost = (post: Post) => (
-  dispatch: (dispatched: DispatchPost) => void,
+  dispatch: (dispatched: ActionType) => void,
   getState: () => State
 ) => {
   axios({
@@ -96,7 +96,7 @@ export const updatePost = (post: Post) => (
       const index = posts.findIndex(changedPost => changedPost.id === post.id);
       posts[index] = { ...res.data, editMode: false };
       dispatch({
-        type: GET_ALL_POSTS,
+        type: SET_ALL_POSTS,
         payload: posts
       });
     })
@@ -105,7 +105,7 @@ export const updatePost = (post: Post) => (
 
 // Add Comment to post
 export const createComment = (comment: Comment) => (
-  dispatch: (dispatched: DispatchPost) => void,
+  dispatch: (dispatched: ActionType) => void,
   getState: () => State
 ) => {
   axios({
@@ -129,14 +129,14 @@ export const createComment = (comment: Comment) => (
 
 // Change edit post mode
 export const setEditMode = (id: number, mode: boolean) => (
-  dispatch: (dispatched: DispatchPost) => void,
+  dispatch: (dispatched: ActionType) => void,
   getState: () => State
 ) => {
   const posts = [...getState().data.posts];
   const index = posts.findIndex(post => post.id === id);
   posts[index].editMode = mode;
   dispatch({
-    type: GET_ALL_POSTS,
+    type: SET_ALL_POSTS,
     payload: posts
   });
 };

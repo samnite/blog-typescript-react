@@ -1,5 +1,6 @@
-import { GET_ALL_POSTS, GET_SINGLE_POST, SET_LOADING } from "../types";
+import { SET_ALL_POSTS, GET_SINGLE_POST } from "../types";
 import { createReducer } from "../redux";
+import { ActionType } from "../actions/projects-actions";
 
 export interface Comment {
   postId: number;
@@ -26,23 +27,17 @@ const initialState = {
 };
 
 export default createReducer(initialState, {
-  [GET_ALL_POSTS]: (state: RootState, action: any) => {
+  [SET_ALL_POSTS]: (state: RootState, action: ActionType) => {
     return {
       ...state,
       posts: action.payload,
       isLoading: false
     };
   },
-  [GET_SINGLE_POST]: (state: RootState, action: any) => {
+  [GET_SINGLE_POST]: (state: RootState, action: ActionType) => {
     return {
       ...state,
       post: action.payload
-    };
-  },
-  [SET_LOADING]: (state: RootState) => {
-    return {
-      ...state,
-      isLoading: true
     };
   }
 });

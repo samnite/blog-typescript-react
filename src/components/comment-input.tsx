@@ -9,7 +9,7 @@ type Event = { target: { value: string } };
 
 interface OwnProps {
   createComment: (comment: Comment) => void;
-  id: number;
+  id: number | undefined;
 }
 
 type Props = OwnProps;
@@ -17,7 +17,7 @@ type Props = OwnProps;
 const CommentInput: FunctionComponent<Props> = ({ id, createComment }) => {
   const [body, setBody] = useState("");
   const onAddComment = () => {
-    createComment({ postId: id, body });
+    if (id) createComment({ postId: id, body });
   };
   return (
     <StyledInput>
@@ -37,5 +37,4 @@ const CommentInput: FunctionComponent<Props> = ({ id, createComment }) => {
 export default connect(
   null,
   { createComment }
-  // @ts-ignore // TODO remove on prod
 )(CommentInput);

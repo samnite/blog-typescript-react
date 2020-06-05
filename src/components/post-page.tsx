@@ -32,7 +32,6 @@ const PostPage: FunctionComponent<Props> = ({
     // eslint-disable-next-line
   }, []);
   if (post === null) return <StyledSpinner />;
-  console.log(!!post.comments);
   const comments: Comment[] | undefined = post.comments;
   return (
     <StyledPostPage>

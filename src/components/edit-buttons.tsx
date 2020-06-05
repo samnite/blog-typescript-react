@@ -34,7 +34,6 @@ const EditButtons: FunctionComponent<Props> = ({
     if (postId) {
       setEditMode(postId, true);
     }
-    console.log("work");
   };
   return (
     <StyledButtons>
