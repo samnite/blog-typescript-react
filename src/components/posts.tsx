@@ -19,12 +19,15 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-const Posts: FunctionComponent<Props> = ({ getAllPosts, data: { posts } }) => {
+const Posts: FunctionComponent<Props> = ({
+  getAllPosts,
+  data: { posts, isLoading }
+}) => {
   useEffect(() => {
     getAllPosts();
     // eslint-disable-next-line
   }, []);
-  if (posts === null) return <p>loading...</p>;
+  if (isLoading) return <p>loading...</p>;
   return (
     <StyledPosts>
       {posts && posts.map(post => <SinglePost key={post.id} post={post} />)}

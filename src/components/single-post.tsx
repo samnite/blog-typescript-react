@@ -23,7 +23,7 @@ const SinglePost: FunctionComponent<Props> = ({ post, showButton = true }) => {
       title={post.title}
       extra={
         showButton ? (
-          <EditButtons />
+          <EditButtons postId={post.id ? post.id : null} />
         ) : (
           <Link to="/">
             <Button type="primary">Back</Button>

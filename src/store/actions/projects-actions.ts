@@ -1,6 +1,7 @@
 import axios from "axios";
-import { GET_ALL_POSTS, GET_SINGLE_POST } from "../types";
-import { Post } from "../reducers/blog-reducer";
+import { GET_ALL_POSTS, GET_SINGLE_POST, SET_LOADING } from "../types";
+import { Post, RootState } from "../reducers/blog-reducer";
+import { State } from "../store";
 
 axios.defaults.baseURL = "https://bloggy-api.herokuapp.com/";
 
@@ -51,6 +52,20 @@ export const addPost = (post: Post) => (dispatch: never) => {
     .catch(err => console.log(err.message));
 };
 
+// Delete Post from server
+export const deletePost = (id: number) => (
+  dispatch: never,
+  getState: () => State
+) => {
+  const state = { ...getState() };
+  axios
+    .delete(`/posts/${id}`)
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => console.log(err.message));
+};
+
 // Update post on server
 export const updatePost = (post: Post) => (
   dispatch: (dispatched: DispatchPost) => void
@@ -79,4 +94,12 @@ export const createComment = (post: Post) => (
       console.log(res.data);
     })
     .catch(err => console.log(err.message));
+};
+
+export const setLoading = () => (
+  dispatch: (dispatched: DispatchPost) => void
+) => {
+  dispatch({
+    type: SET_LOADING
+  });
 };
