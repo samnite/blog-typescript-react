@@ -1,12 +1,15 @@
-import { GET_PROJECT } from "../types";
+import { GET_ALL_POSTS, GET_SINGLE_POST } from "../types";
 import { createReducer } from "../redux";
 
 export interface Post {
-  post: any;
+  id?: number;
+  title: string;
+  body: string;
+  comments?: string[];
 }
 export interface RootState {
   posts: Post[];
-  post: any;
+  post: Post;
 }
 
 const initialState = {
@@ -15,11 +18,16 @@ const initialState = {
 };
 
 export default createReducer(initialState, {
-  [GET_PROJECT]: (state: RootState, { payload }: any) => {
+  [GET_ALL_POSTS]: (state: RootState, action: any) => {
     return {
       ...state,
-      project: payload,
-      alert: null
+      posts: action.payload
+    };
+  },
+  [GET_SINGLE_POST]: (state: RootState, action: any) => {
+    return {
+      ...state,
+      post: action.payload
     };
   }
 });

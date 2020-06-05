@@ -2,6 +2,8 @@
   "extends": "airbnb-typescript-prettier",
   "rules": {
     "no-console": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-unused-vars": "off", // TODO remove on prod
     "@typescript-eslint/no-empty-interface": "off", // TODO remove on prod
     "import/prefer-default-export": "off"
   }
