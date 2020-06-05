@@ -28,7 +28,7 @@ const CommentInput: FunctionComponent<Props> = ({ id, createComment }) => {
         onChange={(e: Event) => setBody(e.target.value)}
       />
       <Button type="primary" disabled={!body} onClick={onAddComment}>
-        Add Post
+        Add Comment
       </Button>
     </StyledInput>
   );
@@ -37,5 +37,5 @@ const CommentInput: FunctionComponent<Props> = ({ id, createComment }) => {
 export default connect(
   null,
   { createComment }
-  // @ts-ignore
+  // @ts-ignore // TODO remove on prod
 )(CommentInput);

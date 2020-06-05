@@ -1,9 +1,4 @@
-import {
-  GET_ALL_POSTS,
-  GET_SINGLE_POST,
-  SET_LOADING,
-  UPDATE_COMMENTS
-} from "../types";
+import { GET_ALL_POSTS, GET_SINGLE_POST, SET_LOADING } from "../types";
 import { createReducer } from "../redux";
 
 export interface Comment {
@@ -16,6 +11,7 @@ export interface Post {
   title: string;
   body: string;
   comments?: Comment[];
+  editMode?: boolean;
 }
 export interface RootState {
   posts: Post[] | null;

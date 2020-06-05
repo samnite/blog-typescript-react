@@ -1,12 +1,6 @@
 @import '~antd/dist/antd.css';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap');
 
-:root {
-    --primary-color: #678d3b !important;
-    --primary-hover-color: #93cb52 !important;
-    --dark-color: #333 !important;
-}
-
 * {
     box-sizing: border-box;
     margin: 0;

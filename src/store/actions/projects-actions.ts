@@ -1,11 +1,11 @@
 import axios from "axios";
-import { GET_ALL_POSTS, GET_SINGLE_POST, SET_LOADING } from "../types";
-import { Post, RootState } from "../reducers/blog-reducer";
+import { GET_ALL_POSTS, GET_SINGLE_POST } from "../types";
+import { Post } from "../reducers/blog-reducer";
 import { State } from "../store";
 
 axios.defaults.baseURL = "https://bloggy-api.herokuapp.com/";
 
-type DispatchPost = { type: string; payload?: Post | Post[] };
+type DispatchPost = { type: string; payload?: Post | Post[] | boolean };
 
 // Get All Posts from server
 export const getAllPosts = () => (
@@ -14,10 +14,13 @@ export const getAllPosts = () => (
   axios
     .get("/posts")
     .then(res => {
-      console.log(res);
+      const posts = res.data.map((post: Post) => ({
+        ...post,
+        editMode: false // Needed to edit posts
+      }));
       dispatch({
         type: GET_ALL_POSTS,
-        payload: res.data.reverse()
+        payload: posts.reverse()
       });
     })
     .catch(err => console.log(err.message));
@@ -30,7 +33,6 @@ export const getSinglePost = (id: number) => (
   axios
     .get(`/posts/${id}?_embed=comments`)
     .then(res => {
-      console.log(res.data);
       dispatch({
         type: GET_SINGLE_POST,
         payload: res.data
@@ -81,7 +83,8 @@ export const deletePost = (id: number) => (
 
 // Update post on server
 export const updatePost = (post: Post) => (
-  dispatch: (dispatched: DispatchPost) => void
+  dispatch: (dispatched: DispatchPost) => void,
+  getState: () => State
 ) => {
   axios({
     method: "put",
@@ -89,7 +92,13 @@ export const updatePost = (post: Post) => (
     data: post
   })
     .then(res => {
-      console.log(res.data);
+      const posts = [...getState().data.posts];
+      const index = posts.findIndex(changedPost => changedPost.id === post.id);
+      posts[index] = { ...res.data, editMode: false };
+      dispatch({
+        type: GET_ALL_POSTS,
+        payload: posts
+      });
     })
     .catch(err => console.log(err.message));
 };
@@ -116,4 +125,18 @@ export const createComment = (comment: Comment) => (
       }
     })
     .catch(err => console.log(err.message));
+};
+
+// Change edit post mode
+export const setEditMode = (id: number, mode: boolean) => (
+  dispatch: (dispatched: DispatchPost) => void,
+  getState: () => State
+) => {
+  const posts = [...getState().data.posts];
+  const index = posts.findIndex(post => post.id === id);
+  posts[index].editMode = mode;
+  dispatch({
+    type: GET_ALL_POSTS,
+    payload: posts
+  });
 };

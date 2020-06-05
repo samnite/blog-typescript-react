@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { deletePost } from "../store/actions/projects-actions";
+import { deletePost, setEditMode } from "../store/actions/projects-actions";
 
 const StyledButtons = styled.div`
   display: flex;
@@ -14,20 +14,31 @@ const StyledButtons = styled.div`
 
 interface OwnProps {
   deletePost: (id: number) => void;
+  setEditMode: (id: number, mode: boolean) => void;
   postId: number | null;
 }
 
 type Props = OwnProps;
 
-const EditButtons: FunctionComponent<Props> = ({ deletePost, postId }) => {
+const EditButtons: FunctionComponent<Props> = ({
+  deletePost,
+  setEditMode,
+  postId
+}) => {
   const onDeletePost = () => {
     if (postId) {
       deletePost(postId);
     }
   };
+  const changeMode = () => {
+    if (postId) {
+      setEditMode(postId, true);
+    }
+    console.log("work");
+  };
   return (
     <StyledButtons>
-      <EditOutlined />
+      <EditOutlined onClick={changeMode} />
       <DeleteOutlined style={{ color: "red" }} onClick={onDeletePost} />
     </StyledButtons>
   );
@@ -35,5 +46,5 @@ const EditButtons: FunctionComponent<Props> = ({ deletePost, postId }) => {
 
 export default connect(
   null,
-  { deletePost }
+  { deletePost, setEditMode }
 )(EditButtons);

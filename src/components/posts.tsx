@@ -1,9 +1,10 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { connect } from "react-redux";
 import styled from "styled-components";
+import { connect } from "react-redux";
 import SinglePost from "./single-post";
-import { getAllPosts } from "../store/actions/projects-actions";
 import { RootState } from "../store/reducers/blog-reducer";
+import { StyledSpinner } from "./shared/components";
+import { getAllPosts } from "../store/actions/projects-actions";
 import { State } from "../store/store";
 
 export const StyledPosts = styled.div`
@@ -27,7 +28,7 @@ const Posts: FunctionComponent<Props> = ({
     getAllPosts();
     // eslint-disable-next-line
   }, []);
-  if (isLoading) return <p>loading...</p>;
+  if (isLoading) return <StyledSpinner />;
   return (
     <StyledPosts>
       {posts && posts.map(post => <SinglePost key={post.id} post={post} />)}

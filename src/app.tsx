@@ -1,17 +1,16 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent } from "react";
 import { Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
+import { StyledContainer } from "./components/shared/components";
 import {
   getAllPosts,
   getSinglePost,
   addPost
 } from "./store/actions/projects-actions";
-import SinglePost from "./components/single-post";
 import NotFound from "./components/not-found";
 import Home from "./components/home";
 import { Post } from "./store/reducers/blog-reducer";
 import PostPage from "./components/post-page";
-import styled from "styled-components";
 
 interface OwnProps {
   getAllPosts: () => void;
@@ -21,21 +20,7 @@ interface OwnProps {
 
 type Props = OwnProps;
 
-const StyledContainer = styled.div`
-  max-width: 1100px;
-  margin: auto;
-  padding: 0 2rem;
-  overflow: hidden;
-`;
-
-const App: FunctionComponent<Props> = ({
-  getAllPosts,
-  getSinglePost,
-  addPost
-}) => {
-  useEffect(() => {
-    // eslint-disable-next-line
-  }, []);
+const App: FunctionComponent<Props> = () => {
   return (
     <StyledContainer>
       <Switch>

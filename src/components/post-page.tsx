@@ -1,13 +1,14 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { connect } from "react-redux";
-import styled from "styled-components";
 import { Card } from "antd";
+import styled from "styled-components";
 import SinglePost from "./single-post";
 import { getSinglePost } from "../store/actions/projects-actions";
 import { State } from "../store/store";
 import { Comment, RootState } from "../store/reducers/blog-reducer";
 import { StyledPosts } from "./posts";
 import CommentInput from "./comment-input";
+import { StyledSpinner } from "./shared/components";
 
 interface OwnProps {
   getSinglePost: (id: number) => void;
@@ -16,6 +17,10 @@ interface OwnProps {
 }
 
 type Props = OwnProps;
+
+const StyledPostPage = styled(StyledPosts)`
+  margin-top: 25px;
+`;
 
 const PostPage: FunctionComponent<Props> = ({
   getSinglePost,
@@ -26,11 +31,11 @@ const PostPage: FunctionComponent<Props> = ({
     getSinglePost(match.params.id);
     // eslint-disable-next-line
   }, []);
-  if (post === null) return <p>loading...</p>;
+  if (post === null) return <StyledSpinner />;
   console.log(!!post.comments);
   const comments: Comment[] | undefined = post.comments;
   return (
-    <StyledPosts>
+    <StyledPostPage>
       <SinglePost post={post} showButton={false} />
       <CommentInput id={post.id} />
       <Card title="Comments" bordered={false} style={{ width: 500 }}>
@@ -40,7 +45,7 @@ const PostPage: FunctionComponent<Props> = ({
             })
           : "No comments yet"}
       </Card>
-    </StyledPosts>
+    </StyledPostPage>
   );
 };
 

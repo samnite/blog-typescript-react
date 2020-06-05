@@ -4,8 +4,8 @@ interface OwnProps {}
 
 type Props = OwnProps;
 
-const NotFound: FunctionComponent<Props> = props => {
-  return <div>Not Found</div>;
+const NotFound: FunctionComponent<Props> = () => {
+  return <div>Page Not Found</div>;
 };
 
 export default NotFound;
