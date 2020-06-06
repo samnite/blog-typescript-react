@@ -14,12 +14,14 @@ export interface State {
   data: RootState;
 }
 
+type InitRootState = State | {};
+
 const rootReducer = combineReducers({
   router: connectRouter(history),
   data: blogReducer
 });
 
-export const createNewStore = (state: any) =>
+export const createNewStore = (state: InitRootState) =>
   createStore(
     rootReducer,
     state,

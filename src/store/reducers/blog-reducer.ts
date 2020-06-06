@@ -1,4 +1,4 @@
-import { SET_ALL_POSTS, GET_SINGLE_POST } from "../types";
+import { SET_ALL_POSTS, SET_SINGLE_POST } from "../types";
 import { createReducer } from "../redux";
 import { ActionType } from "../actions/projects-actions";
 
@@ -34,7 +34,7 @@ export default createReducer(initialState, {
       isLoading: false
     };
   },
-  [GET_SINGLE_POST]: (state: RootState, action: ActionType) => {
+  [SET_SINGLE_POST]: (state: RootState, action: ActionType) => {
     return {
       ...state,
       post: action.payload

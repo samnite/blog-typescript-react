@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SET_ALL_POSTS, GET_SINGLE_POST } from "../types";
+import { SET_ALL_POSTS, SET_SINGLE_POST } from "../types";
 import { Comment, Post } from "../reducers/blog-reducer";
 import { State } from "../store";
 
@@ -9,7 +9,7 @@ export type ActionType = { type: string; payload?: Post | Post[] | boolean };
 
 // Get All Posts from server
 export const getAllPosts = () => (
-  dispatch: (dispatched: ActionType) => void
+  dispatch: (dispatched: ActionType) => State
 ) => {
   axios
     .get("/posts")
@@ -28,13 +28,13 @@ export const getAllPosts = () => (
 
 // Get Single Post from server
 export const getSinglePost = (id: number) => (
-  dispatch: (dispatched: ActionType) => void
+  dispatch: (dispatched: ActionType) => State
 ) => {
   axios
     .get(`/posts/${id}?_embed=comments`)
     .then(res => {
       dispatch({
-        type: GET_SINGLE_POST,
+        type: SET_SINGLE_POST,
         payload: res.data
       });
     })
@@ -43,7 +43,7 @@ export const getSinglePost = (id: number) => (
 
 // Add Post on server
 export const addPost = (post: Post) => (
-  dispatch: (dispatched: ActionType) => void,
+  dispatch: (dispatched: ActionType) => State,
   getState: () => State
 ) => {
   axios({
@@ -65,7 +65,7 @@ export const addPost = (post: Post) => (
 
 // Delete Post from server
 export const deletePost = (id: number) => (
-  dispatch: (dispatched: ActionType) => void,
+  dispatch: (dispatched: ActionType) => State,
   getState: () => State
 ) => {
   axios
@@ -83,7 +83,7 @@ export const deletePost = (id: number) => (
 
 // Update post on server
 export const updatePost = (post: Post) => (
-  dispatch: (dispatched: ActionType) => void,
+  dispatch: (dispatched: ActionType) => State,
   getState: () => State
 ) => {
   axios({
@@ -105,7 +105,7 @@ export const updatePost = (post: Post) => (
 
 // Add Comment to post
 export const createComment = (comment: Comment) => (
-  dispatch: (dispatched: ActionType) => void,
+  dispatch: (dispatched: ActionType) => State,
   getState: () => State
 ) => {
   axios({
@@ -119,7 +119,7 @@ export const createComment = (comment: Comment) => (
       if (post.comments) {
         post.comments.push(res.data);
         dispatch({
-          type: GET_SINGLE_POST,
+          type: SET_SINGLE_POST,
           payload: post
         });
       }
@@ -129,7 +129,7 @@ export const createComment = (comment: Comment) => (
 
 // Change edit post mode
 export const setEditMode = (id: number, mode: boolean) => (
-  dispatch: (dispatched: ActionType) => void,
+  dispatch: (dispatched: ActionType) => State,
   getState: () => State
 ) => {
   const posts = [...getState().data.posts];
